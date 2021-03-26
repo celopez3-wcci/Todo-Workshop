@@ -38,37 +38,22 @@ namespace todos.Controllers
             return todo;
         }
 
-        //// PUT: api/Todo/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
-        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutTodo(int id, Todo todo)
-        //{
-        //    if (id != todo.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+        // PUT: api/Todo/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}")]
+        public Todo PutTodo(int id, Todo todo)
+        {
+            if (id != todo.Id)
+            {
+                return null;
+            }
 
-        //    _context.Entry(todo).State = EntityState.Modified;
+            todoRepo.Update(todo);
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!TodoExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
+            return todo;
+           
+        }
 
         // POST: api/Todo
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -81,21 +66,16 @@ namespace todos.Controllers
             return todo;
         }
 
-        //// DELETE: api/Todo/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<Todo>> DeleteTodo(int id)
-        //{
-        //    var todo = await _context.Todos.FindAsync(id);
-        //    if (todo == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // DELETE: api/Todo/5
+        [HttpDelete("{id}")]
+        public string DeleteTodo(int id)
+        {
+            var todo = todoRepo.GetById(id);
 
-        //    _context.Todos.Remove(todo);
-        //    await _context.SaveChangesAsync();
+            todoRepo.Delete(todo);
 
-        //    return todo;
-        //}
+            return "Deleted item successfully";
+        }
 
         //private bool TodoExists(int id)
         //{

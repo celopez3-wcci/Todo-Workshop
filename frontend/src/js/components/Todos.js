@@ -5,7 +5,7 @@ export default function Todos(todos){
             ${todos.map(todo =>{
                 return `
                     <li>
-                        ${todo.name} submitted by ${todo.username}
+                        ${todo.name} submitted by ${todo.owner.name}
                     </li>
                 `
             })}

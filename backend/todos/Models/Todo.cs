@@ -11,7 +11,8 @@ namespace todos.Models
         public string Name { get; set; }
         public string Content { get; set; }
         public bool IsDone { get; set; }
-        public string Username { get; set; }
+        public int OwnerId { get; set; }
+        public virtual Owner Owner { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime DueBy { get; set; }
         

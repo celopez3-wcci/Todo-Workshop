@@ -22,6 +22,21 @@ namespace todos
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Owner>().HasData(
+                new Owner()
+                {
+                    Id = 1,
+                    Name = "Carlos",
+                    Email = "carlos@wecancodeit.org"
+                },
+                new Owner()
+                {
+                    Id = 2,
+                    Name = "Davis",
+                    Email = "davis@wecancodeit.org"
+                }
+            );
+
             modelBuilder.Entity<Todo>().HasData(
                 new Todo()
                 {
@@ -31,7 +46,7 @@ namespace todos
                     CreatedOn = DateTime.Now,
                     IsDone = false,
                     DueBy = DateTime.Now.AddDays(5),
-                    Username = "SYSTEM"
+                    OwnerId = 1
                 },
                 new Todo()
                 {
@@ -41,7 +56,7 @@ namespace todos
                     CreatedOn = DateTime.Now,
                     IsDone = false,
                     DueBy = DateTime.Now.AddDays(5),
-                    Username = "SYSTEM"
+                    OwnerId = 2
                 },
                 new Todo()
                 {
@@ -51,7 +66,7 @@ namespace todos
                     IsDone = false,
                     CreatedOn = DateTime.Now,
                     DueBy = DateTime.Now.AddDays(5),
-                    Username = "SYSTEM"
+                    OwnerId = 1
                 }
             ) ; 
         }
