@@ -1,3 +1,5 @@
+const todayDate = new Date(Date.now());
+
 export default function Footer(){
-    return Date.now().toString();
+    return todayDate.getFullYear();
 }

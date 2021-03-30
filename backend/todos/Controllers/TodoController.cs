@@ -59,11 +59,13 @@ namespace todos.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public Todo PostTodo([FromBody]Todo todo)
+        public Owner PostTodo([FromBody]Todo todo)
         {
+            todo.DueBy = todo.CreatedOn.AddDays(5);
+
             todoRepo.Create(todo);
 
-            return todo;
+            return todoRepo.GetOwnerByTodoId(todo.Id);
         }
 
         // DELETE: api/Todo/5

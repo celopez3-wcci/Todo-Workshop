@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using todos.Models;
 
 namespace todos.Repositories
 {
@@ -40,6 +41,12 @@ namespace todos.Repositories
         {
             db.Set<T>().Update(entity);
             Save();
+        }
+
+        public Owner GetOwnerByTodoId(int id)
+        {
+            var todo = db.Set<Todo>().Include(o => o.Owner).Where(t => t.Id == id).FirstOrDefault();
+            return todo.Owner;
         }
     }
 }

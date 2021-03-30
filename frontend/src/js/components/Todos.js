@@ -8,7 +8,7 @@ export default function Todos(todos){
                         ${todo.name} submitted by ${todo.owner.name}
                     </li>
                 `
-            })}
+            }).join('')}
         </ol>
     `
 

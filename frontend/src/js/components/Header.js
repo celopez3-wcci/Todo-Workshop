@@ -4,7 +4,7 @@ export default function Header(){
         <ul>
             <li class='nav_home'>Home</li>
             <li class='nav_todos'>Todos</li>
-            <li>Users</li>
+            <li class='nav_users'>Users</li>
         </ul>
     </nav>
     `;

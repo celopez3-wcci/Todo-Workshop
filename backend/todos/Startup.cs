@@ -38,6 +38,7 @@ namespace todos
             services.AddDbContext<TodoContext>();
             //add dependency injection for repositories
             services.AddScoped<IRepository<Todo>, TodoRepository>();
+            services.AddScoped<IRepository<Owner>, OwnerRepository>();
 
             // used for asp.net 3.1 cors issue
             services.AddCors(options =>
