@@ -32,7 +32,7 @@ namespace todos.Controllers
         [HttpGet("{id}")]
         public Owner Get(int id)
         {
-            return ownerRepo.GetById(1);
+            return ownerRepo.GetById(id);
         }
 
         // POST api/<OwnerController>
