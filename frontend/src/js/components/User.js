@@ -13,7 +13,9 @@ export default function User(user){
         </ul>
 
         <section class="user_addtodo">
+            <label>Todo Name: </label>
             <input type='text' class="todoName" PlaceHolder="Add a New Item" />
+            <br />
             <button class="todoAddButton" id="${user.id}">Add Todo Item</button>
         </section>
     `
