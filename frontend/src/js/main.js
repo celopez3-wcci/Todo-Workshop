@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Todos from "./components/Todos";
+import Todo from "./components/Todo";
 import Users from "./components/Users";
 import User from "./components/User";
 import apiAction from "./api/api-actions";
@@ -36,6 +37,7 @@ function navHome() {
     const homeLink = document.querySelector(".nav_home");
     homeLink.addEventListener('click', function () {
         appDiv.innerHTML = Home();
+
     });
 }
 
@@ -43,17 +45,14 @@ function navTodos() {
     const todosButton = document.querySelector(".nav_todos");
     todosButton.addEventListener('click', function () {
 
-        apiAction.getRequest(todoAPI, values => {
-            appDiv.innerHTML = Todos(values);
+        apiAction.getRequest(todoAPI, todos => {
+            appDiv.innerHTML = Todos(todos);
             fillOwners();
             AddTodo();
             deleteTodoButtons();
+            editTodoButtons();
         })
 
-        // fetch("https://localhost:44393/api/todo")
-        //     .then(response => response.json())
-        //     .then(data => appDiv.innerHTML = Todos(data))
-        //     .catch(err => console.log(err));
     });
 }
 
@@ -63,16 +62,47 @@ function navUsers() {
 
         apiAction.getRequest("https://localhost:44393/api/owner", values => {
             appDiv.innerHTML = Users(values);
-            userNameButton();
+            userNameNavLinks();
         });
 
-        // fetch('https://localhost:44393/api/owner')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         appDiv.innerHTML = Users(data); 
-        //         userNameButton(); 
-        //     })
-        //     .catch(err => console.log(err));
+    });
+}
+
+function editTodoButtons(){
+    const editTodoElements = document.querySelectorAll(".fa-edit");
+    editTodoElements.forEach(element =>{
+        element.addEventListener('click', function(){
+            const todoId = element.id;
+            apiAction.getRequest(todoAPI+todoId, todo =>{
+                appDiv.innerHTML = Todo(todo);
+                //activate save button
+                updateTodoButton();
+            })
+        })
+    })
+}
+
+function updateTodoButton(){
+    const updateButton = document.getElementById("btnEditTodo");
+    updateButton.addEventListener('click', function(){
+        const todoId = document.getElementById('todoId').value;
+        const userId = document.getElementById('ownerId').value;
+        const todoName = document.getElementById('todoName').value;
+
+        const requestBody = {
+            Id: todoId,
+            Name: todoName,
+            OwnerId: userId,
+        }
+
+        apiAction.putRequest(todoAPI, todoId, requestBody, todos => {
+            appDiv.innerHTML = Todos(todos);
+            fillOwners();
+            AddTodo();
+            deleteTodoButtons();
+            editTodoButtons();
+        })
+
     });
 }
 
@@ -90,27 +120,13 @@ function deleteTodoButtons() {
                 }
             });
 
-            // fetch(`${todoAPI}${todoId}`, {
-            //     method: "DELETE",
-            //     headers: {
-            //         "Content-Type" : "application/json"
-            //     }
-            // })
-            // .then(response => response.text())
-            // .then(data => {
-            //     console.log(data);
-            //     const liItem = document.getElementById(todoId).parentElement;
-            //     liItem.remove();
-            //     //appDiv.innerHTML = Todos(todos);
-            // })
-            // .catch(err => console.log(err));
 
 
         });
     })
 }
 
-function userNameButton() {
+function userNameNavLinks() {
     const userNameElements = document.querySelectorAll(".todo_user");
     userNameElements.forEach(element => {
         element.addEventListener('click', function () {
@@ -121,13 +137,6 @@ function userNameButton() {
                 userAddTodo();
             });
 
-            // fetch(`https://localhost:44393/api/owner/${userId}`)
-            // .then(response => response.json())
-            // .then(user => {
-            //     appDiv.innerHTML = User(user);
-            //     userAddTodo();
-            // })
-            // .catch(err => console.log(err));
         });
     });
 
@@ -145,11 +154,16 @@ function AddTodo(){
             CreatedOn: currentDate,
             DueBy: currentDate
         }
-
-        apiAction.postRequest(todoAPI, requestBody, user => {
-            appDiv.innerHTML = User(user);
-            userAddTodo();
-        })
+        //console.log("Im looking for this: " + userId);
+        if(userId != "Select an Owner"){
+            apiAction.postRequest(todoAPI, requestBody, user => {
+                appDiv.innerHTML = User(user);
+                userAddTodo();
+            })
+        }else{
+            const p = document.getElementById('responseMessage');
+            p.innerText = "You must select a user.";
+        }
 
     });
 }
@@ -174,20 +188,6 @@ function userAddTodo() {
             userAddTodo();
         })
 
-        // fetch(`https://localhost:44393/api/todo/`, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type" : "application/json"
-        //     },
-        //     body: JSON.stringify(requestBody)
-        // })
-        // .then(response => response.json())
-        // .then(user => {
-        //     console.log(user);
-        //     appDiv.innerHTML = User(user);
-        //     userAddTodo();
-        // })
-        // .catch(err => console.log(err));
 
     });
 }

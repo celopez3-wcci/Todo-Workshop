@@ -24,8 +24,19 @@ function postRequest(location, requestBody, callback){
     .catch(err => console.log(err));
 }
 
-function putRequest(location, requestBody, callback){
-
+function putRequest(location, id, requestBody, callback){
+    fetch(`${location}${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type" : "application/json"
+    },
+    body: JSON.stringify(requestBody)
+    })
+    .then(response => response.json())
+    .then(user => {
+        callback(user);
+    })
+    .catch(err => console.log(err));
 }
 
 function deleteRequest(location, id, callback){
@@ -38,10 +49,6 @@ function deleteRequest(location, id, callback){
     .then(response => response.text())
     .then(data => {
         callback(data);
-        // console.log(data);
-        // const liItem = document.getElementById(todoId).parentElement;
-        // liItem.remove();
-        //appDiv.innerHTML = Todos(todos);
     })
     .catch(err => console.log(err));
 }

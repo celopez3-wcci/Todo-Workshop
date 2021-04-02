@@ -1,5 +1,7 @@
 export default function User(user){
-
+    if(user.todos == null){
+        user.todos = [];
+    }
     return `
         <h1>${user.name}</h1>
         <ul>

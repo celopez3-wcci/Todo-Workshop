@@ -6,6 +6,7 @@ export default function Todos(todos){
                 return `
                     <li>
                         ${todo.name} submitted by ${todo.owner.name} 
+                        <i class="far fa-edit" aria-hidden="true" id='${todo.id}'></i>
                         <i class="fa fa-trash" aria-hidden="true" id='${todo.id}'></i>
                     </li>
                 `
