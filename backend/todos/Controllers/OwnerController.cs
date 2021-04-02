@@ -37,13 +37,18 @@ namespace todos.Controllers
 
         // POST api/<OwnerController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public Owner Post([FromBody] Owner owner)
         {
+            ownerRepo.Create(owner);
+
+            ownerRepo.LoadProxy(owner, "Todos");
+
+            return owner;
         }
 
         // PUT api/<OwnerController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Owner owner)
         {
         }
 

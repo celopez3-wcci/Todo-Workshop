@@ -43,6 +43,11 @@ namespace todos.Repositories
             Save();
         }
 
+        public void LoadProxy(T entity, string include)
+        {
+            db.Entry<T>(entity).Reference(include).Load();
+        }
+
         public Owner GetOwnerByTodoId(int id)
         {
             var todo = db.Set<Todo>().Include(o => o.Owner).Where(t => t.Id == id).FirstOrDefault();

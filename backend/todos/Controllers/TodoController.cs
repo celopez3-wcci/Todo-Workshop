@@ -42,7 +42,7 @@ namespace todos.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public Todo PutTodo(int id, Todo todo)
+        public IEnumerable<Todo> PutTodo(int id, Todo todo)
         {
             if (id != todo.Id)
             {
@@ -51,7 +51,7 @@ namespace todos.Controllers
 
             todoRepo.Update(todo);
 
-            return todo;
+            return todoRepo.GetAll();
            
         }
 
